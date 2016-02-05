@@ -1,0 +1,23 @@
+@(title: String, configuration: play.api.Configuration)
+
+@main(title) {
+  <h1>@title</h1>
+  <p>
+    <h3>Environment</h3>
+    <ul>
+      <li>application.name=@configuration.getString("application.name")</li>
+      <li>application.environment=@configuration.getString("application.environment")</li>
+    </ul>
+  </p>
+  <p>
+    <h3>RDS Environment variables</h3>
+    <ul>
+      <li>rds.hostname=@configuration.getString("rds.hostname")</li>
+      <li>rds.port=@configuration.getString("rds.port")</li>
+      <li>rds.db.name=@configuration.getString("rds.db.name")</li>
+      <li>rds.username=@configuration.getString("rds.username")</li>
+      <li>rds.password=@configuration.getString("rds.password")</li>
+      <li>rds.url=@configuration.getString("rds.url")</li>
+    </ul>
+  </p>
+}
