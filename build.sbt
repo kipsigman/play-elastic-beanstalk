@@ -29,15 +29,19 @@ dockerExposedPorts := Seq(9000)
 dockerBaseImage := "java:latest"
 
 // Elastic Beanstalk tasks
-lazy val elasticBeanstalkStage = taskKey[Unit]("Create a local directory with all the files for an AWS Elastic Beanstalk Docker distribution.")
+lazy val elasticBeanstalkStage = taskKey[File]("Create a local directory with all the files for an AWS Elastic Beanstalk Docker distribution.")
 
 elasticBeanstalkStage := {
-  // Depends on docker:stage
-  val dockerStageValue = (stage in Docker).value
+  val log = streams.value.log
+  
+  // Depends on docker:stage. Re-use docker:stagingDirectory for this task
+  val elasticBeanstalkStagingDirectory = (stage in Docker).value
+  log.info(s"elasticBeanstalkStagingDirectory=${elasticBeanstalkStagingDirectory}")
   
   // Copy Elastic Beanstalk Dockerrun.aws.json configuration file to Docker target directory
   val elasticBeanstalkSource = baseDirectory.value / "elastic-beanstalk"
-  IO.copyDirectory(elasticBeanstalkSource, dockerStageValue, true)
+  IO.copyDirectory(elasticBeanstalkSource, elasticBeanstalkStagingDirectory, true)
+  elasticBeanstalkStagingDirectory
 }
 
 lazy val elasticBeanstalkDist = taskKey[File]("Creates a zip for an AWS Elastic Beanstalk Docker distribution")
@@ -46,14 +50,18 @@ elasticBeanstalkDist := {
   val log = streams.value.log
   
   // Depends on elasticBeanstalkStage
-  val stageValue = elasticBeanstalkStage.value
+  val elasticBeanstalkStagingDirectory = elasticBeanstalkStage.value
+  log.info(s"elasticBeanstalkStage.value=${elasticBeanstalkStagingDirectory}")
   
-  // Zip Docker target
-  val dockerStagingDirectory: File = (stagingDirectory in Docker).value
+  // Create target
+  val elasticBeanstalkTarget = target.value / "elastic-beanstalk"
+  IO.createDirectory(elasticBeanstalkTarget)
+  log.info(s"elasticBeanstalkTarget=${elasticBeanstalkTarget}")
   
-  val zipFile: File = (target.value) / s"${name.value}-${version.value}-elastic-beanstalk.zip"
-  log.info(s"Zipping $dockerStagingDirectory to $zipFile")
-  Process(s"zip -r $zipFile .", dockerStagingDirectory) !!
+  // Zip staging contents
+  val zipFile: File = elasticBeanstalkTarget / s"${name.value}-${version.value}.zip"
+  log.info(s"Zipping $elasticBeanstalkStagingDirectory to $zipFile")
+  Process(s"zip -r $zipFile .", elasticBeanstalkStagingDirectory) !!
   
   zipFile
 }

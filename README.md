@@ -9,14 +9,14 @@ Play 2.4 seed application with build configuration and instructions for deployin
 2. Select "Elastic Beanstalk" from services: https://console.aws.amazon.com/elasticbeanstalk/home
 3. Click "Create New Application"
   1. Application Info
-    1. name/description: Choose whatever you want, i.e. "play-aws-elastic-beanstalk"
+    - name/description: Choose whatever you want, i.e. "play-elastic-beanstalk"
   2. New Environment: Web Server Environment
   3. Environment Type
     - Predefined Configuration: Generic -> Docker
     - Environment type: Single instance
   3. Application Version: Sample application
   4. Environment Information
-    - Environment name: Choose a unique name, i.e. "play-aws-eb-<myname>-env"
+    - Environment name: Choose a unique name, i.e. "play-eb-<myname>-env"
     - Environment URL: Will be auto created
   5. Additional Resources
     - Create an RDS DB instance: check
@@ -31,7 +31,7 @@ Play 2.4 seed application with build configuration and instructions for deployin
   1. sbt elasticBeanstalkDist
 2. Select application/environment from AWS Elastic Beanstalk console
 3. Click "Upload and Deploy"
-  - Choose file: <yourprojectdir>/target/play-aws-elastic-beanstalk-<version>-elastic-beanstalk.zip
+  - Choose file: <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-<version>.zip
   - Version label: Use default or trim to app version number (0.1.0)
 4. Configure for production
   1. Select "Configuration" from your environment in the Elastic Beanstalk console

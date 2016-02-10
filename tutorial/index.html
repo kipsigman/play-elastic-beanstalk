@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <title>Play Elastic Beanstalk</title>
+</head>
+<body>
+
+<div>
+  <h2>Play Elastic Beanstalk</h2>    
+  <p>
+    <a href="https://www.typesafe.com/activator/template/play-scala">Play Scala 2.4 seed application</a> with build configuration and instructions for deploying to Amazon Web Services Elastic Beanstalk.
+  </p>
+</div>
+
+<div>
+  <h2>Prepare Elastic Beanstalk application/environment</h2>
+
+<ol>
+<li>Create an AWS account: https://aws.amazon.com</li>
+<li>Select "Elastic Beanstalk" from services: https://console.aws.amazon.com/elasticbeanstalk/home</li>
+<li>Click "Create New Application"</li>
+  <ol>
+  <li>Application Info</li>
+    <ul>
+    <li>name/description: Choose whatever you want, i.e. "play-elastic-beanstalk"</li>
+    </ul>
+  <li>New Environment: Web Server Environment</li>
+  <li>Environment Type</li>
+    <ul>
+    <li>Predefined Configuration: Generic -> Docker</li>
+    <li>Environment type: Single instance</li>
+    </ul>
+  <li>Application Version: Sample application</li>
+  <li>Environment Information</li>
+    <ul>
+    <li>Environment name: Choose a unique name, i.e. "play-eb-<myname>-env"</li>
+    <li>Environment URL: Will be auto created</li>
+    </ul>
+  <li>Additional Resources</li>
+    <ul>
+    <li>Create an RDS DB instance: check</li>
+    </ul>
+  <li>Configuration Details: Use defaults</li>
+  <li>Environment Tags: none</li>
+  <li>Permissions: Use defaults</li>
+  <li>Review Information: Click "Launch"</li>
+  </ol>
+</ol>
+
+</div>
+
+<div>
+  <h2>Deploying</h2>
+  
+<ol>
+<li>Build dist</li>
+  <ul>
+  <li>sbt elasticBeanstalkDist</li>
+  </ul>
+<li>Select application/environment from AWS Elastic Beanstalk console</li>
+<li>Click "Upload and Deploy"</li>
+  <ul>
+  <li>Choose file: &lt;projectdir&gt;/target/elastic-beanstalk/play-elastic-beanstalk-&lt;version&gt;.zip</li>
+  <li>Version label: Use default or trim to app version number (0.1.0)</li>
+  </ul>
+<li>Configure for production</li>
+  <ol>
+  <li>Select "Configuration" from your environment in the Elastic Beanstalk console</li>
+  <li>Select "Software Configuration" and in Environment Properties add this property:</li>
+    <ul>
+    <li>Property Name: JAVA_OPTS</li>
+    <li>Property Value: -Dconfig.resource=production.conf</li>
+    </ul>
+  </ol>
+<li>View your app with the environment URL provided in the Elastic Beanstalk console</li>
+</ol>
+
+</div>
+<div>
+  <h2>Coming Soon!</h2>
+  <ul>
+    <li>sbt native packager plugin for Elastic Beanstalk tasks</li>
+    <li>Continuous deployment</li>
+  </ul>
+</div>
+
+</body>
+</html>
