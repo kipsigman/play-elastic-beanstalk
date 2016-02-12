@@ -1,9 +1,19 @@
-Amazon Web Services Elastic Beanstalk sample app
+Play Elastic Beanstalk
 =================================
 
-Play 2.4 seed application with build configuration and instructions for deploying to Amazon Web Services Elastic Beanstalk.
+Play 2.4 application with build configuration and instructions for deploying to AWS (Amazon Web Services) Elastic Beanstalk.
 
-## Prepare Elastic Beanstalk application/environment
+## Features
+
+- Seed for Play/Scala app
+- Usage of [SBT Elastic Beanstalk plugin](https://github.com/kipsigman/sbt-elastic-beanstalk)
+- Usage of [SBT Native Packager Docker plugin](http://www.scala-sbt.org/sbt-native-packager/formats/docker.html)
+- Usage of [sbt-buildinfo plugin](https://github.com/sbt/sbt-buildinfo)
+- Configuration for connecting to RDS 
+
+## Deployment to AWS Elastic Beanstalk
+
+### Prepare Elastic Beanstalk application/environment
 
 1. Create an AWS account: https://aws.amazon.com
 2. Select "Elastic Beanstalk" from services: https://console.aws.amazon.com/elasticbeanstalk/home
@@ -25,23 +35,37 @@ Play 2.4 seed application with build configuration and instructions for deployin
   8. Permissions: Use defaults
   9. Review Information: Click "Launch"
    
-## Deploying
+### Build distribution
 
-1. Build dist
-  1. sbt elasticBeanstalkDist
-2. Select application/environment from AWS Elastic Beanstalk console
-3. Click "Upload and Deploy"
-  - Choose file: <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-<version>.zip
+```sh
+sbt elastic-beanstalk:dist
+```
+Note output which indicates package location
+
+### Upload in Elastic Beanstalk console
+1. Select application/environment from AWS Elastic Beanstalk console
+2. Click "Upload and Deploy"
+  - Choose file (see Build distribtion), i.e. <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-0.1.0.zip
   - Version label: Use default or trim to app version number (0.1.0)
-4. Configure for production
+3. Configure for production
   1. Select "Configuration" from your environment in the Elastic Beanstalk console
   2. Select "Software Configuration" and in Environment Properties add this property:
     - Property Name: JAVA_OPTS
     - Property Value: -Dconfig.resource=production.conf
-5. View your app with the environment URL provided in the Elastic Beanstalk console
 
+### View your app
+View your app with the environment URL provided in the Elastic Beanstalk console. The homepage will show the following:
+
+- Environment (should be production)
+- Build info
+- If you set up an RDS database, the environment variables for connecting to it
 
 ## Continuous Deployment
-TODO: Define steps for setting up continuous deployment with Github and AWS
 
-Temp workaround: follow this blog post (though it is a bit out of date): https://www.cloudbees.com/blog/migrating-play2-and-other-apps-aws-beanstalk-docker
+How to set up continuous deployment to Elastic Beanstalk using Github and Jenkins.
+
+NOTE: Coming soon. In the meantime follow this [blog post](https://www.cloudbees.com/blog/migrating-play2-and-other-apps-aws-beanstalk-docker), note that it may be out of date.
+
+## Typesafe Activator Template
+
+https://www.typesafe.com/activator/template/play-elastic-beanstalk

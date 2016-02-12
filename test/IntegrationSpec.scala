@@ -18,7 +18,7 @@ class IntegrationSpec extends Specification {
 
       browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("Play AWS Elastic Beanstalk")
+      browser.pageSource must contain("play-elastic-beanstalk")
     }
   }
 }

@@ -1,11 +1,10 @@
-@(title: String, configuration: play.api.Configuration)
+@(title: String, configuration: play.api.Configuration, buildInfo: Seq[String])
 
 @main(title) {
   <h1>@title</h1>
   <p>
     <h3>Environment</h3>
     <ul>
-      <li>application.name=@configuration.getString("application.name")</li>
       <li>application.environment=@configuration.getString("application.environment")</li>
     </ul>
   </p>
@@ -18,6 +17,14 @@
       <li>rds.username=@configuration.getString("rds.username")</li>
       <li>rds.password=@configuration.getString("rds.password")</li>
       <li>rds.url=@configuration.getString("rds.url")</li>
+    </ul>
+  </p>
+  <p>
+    <h3>BuildInfo</h3>
+    <ul>
+  @for(item <- buildInfo){
+      <li>@item</li>
+  }
     </ul>
   </p>
 }

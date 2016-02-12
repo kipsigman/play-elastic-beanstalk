@@ -10,7 +10,8 @@ import play.api.mvc._
 class Application @Inject() (environment: Environment, configuration: Configuration) extends Controller {
 
   def index = Action {
-    val title = configuration.getString("application.name").get
-    Ok(views.html.index(title, configuration))
+    val title = build.BuildInfo.name
+    val buildInfo: Seq[String] = build.BuildInfo.toString.split(",").map(_.trim()).sorted
+    Ok(views.html.index(title, configuration, buildInfo))
   }
 }
