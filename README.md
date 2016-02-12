@@ -42,7 +42,7 @@ sbt elastic-beanstalk:dist
 ```
 Note output which indicates package location
 
-### Upload in Elastic Beanstalk console
+### Deploy with Elastic Beanstalk console
 1. Select application/environment from AWS Elastic Beanstalk console
 2. Click "Upload and Deploy"
   - Choose file (see Build distribtion), i.e. <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-0.1.0.zip
