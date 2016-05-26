@@ -1,7 +1,7 @@
 Play Elastic Beanstalk
 =================================
 
-Play 2.4 application with build configuration and instructions for deploying to AWS (Amazon Web Services) Elastic Beanstalk.
+Play 2.5 application with build configuration and instructions for deploying to AWS (Amazon Web Services) Elastic Beanstalk.
 
 ## Features
 
