@@ -45,8 +45,8 @@ Note output which indicates package location
 ### Deploy with Elastic Beanstalk console
 1. Select application/environment from AWS Elastic Beanstalk console
 2. Click "Upload and Deploy"
-  - Choose file (see Build distribtion), i.e. <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-0.1.0.zip
-  - Version label: Use default or trim to app version number (0.1.0)
+  - Choose file (see Build distribtion), i.e. <projectdir>/target/elastic-beanstalk/play-elastic-beanstalk-0.2.0.zip
+  - Version label: Use default or trim to app version number (0.2.0)
 3. Configure for production
   1. Select "Configuration" from your environment in the Elastic Beanstalk console
   2. Select "Software Configuration" and in Environment Properties add this property:
